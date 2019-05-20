@@ -688,7 +688,7 @@ void CMainApplication::printPositionalData()
                 position = GetPosition(trackedDevicePose.mDeviceToAbsoluteTracking);
                 quaternion = GetRotation(trackedDevicePose.mDeviceToAbsoluteTracking);
 
-                printDevicePositionalData("HMD", poseMatrix, position, quaternion);
+              //  printDevicePositionalData("HMD", poseMatrix, position, quaternion);
 
                 break;
 
@@ -699,8 +699,12 @@ void CMainApplication::printPositionalData()
 				position = GetPosition(trackedDevicePose.mDeviceToAbsoluteTracking);
 				quaternion = GetRotation(trackedDevicePose.mDeviceToAbsoluteTracking);
 
+				char serialNumber[1024];
+				vr::VRSystem()->GetStringTrackedDeviceProperty(unDevice, vr::Prop_SerialNumber_String, serialNumber, sizeof(serialNumber));
 
-				printDevicePositionalData("Tracker", poseMatrix, position, quaternion);
+				//printf("Serial Number = %s \n", serialNumber);
+				
+				printDevicePositionalData(serialNumber, poseMatrix, position, quaternion);
 
                 break;
 
@@ -731,10 +735,10 @@ void CMainApplication::printPositionalData()
                     break;
 
                 case vr::TrackedControllerRole_LeftHand:
-					printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
+				//	printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
 
                 case vr::TrackedControllerRole_RightHand:
-                printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
+              //  printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
 
                     break;
                 }
@@ -746,6 +750,8 @@ void CMainApplication::printPositionalData()
     }
 
 }
+
+
 
 //-----------------------------------------------------------------------------
 // Purpose:
