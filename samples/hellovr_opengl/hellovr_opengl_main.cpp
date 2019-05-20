@@ -695,6 +695,13 @@ void CMainApplication::printPositionalData()
             case vr::ETrackedDeviceClass::TrackedDeviceClass_GenericTracker:                
                 vr::VRSystem()->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, &trackedDevicePose, 1);
                 // print positiona data for a general vive tracker.
+				poseMatrix = trackedDevicePose.mDeviceToAbsoluteTracking; // This matrix contains all positional and rotational data.
+				position = GetPosition(trackedDevicePose.mDeviceToAbsoluteTracking);
+				quaternion = GetRotation(trackedDevicePose.mDeviceToAbsoluteTracking);
+
+
+				printDevicePositionalData("Tracker", poseMatrix, position, quaternion);
+
                 break;
 
             case vr::ETrackedDeviceClass::TrackedDeviceClass_Controller:
@@ -715,6 +722,8 @@ void CMainApplication::printPositionalData()
                     whichHand = "RightHand";
                 }
 
+
+
                 switch (trackedControllerRole)
                 {
                 case vr::TrackedControllerRole_Invalid:
@@ -722,8 +731,10 @@ void CMainApplication::printPositionalData()
                     break;
 
                 case vr::TrackedControllerRole_LeftHand:
+					printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
+
                 case vr::TrackedControllerRole_RightHand:
-                    printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
+                printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
 
                     break;
                 }
